@@ -37,7 +37,6 @@ echo "##########################################################################
 echo "Benchmarking 1 thread"
 
 ./benchmark_app -m ~/openvino/converted/fp32/mobilenet-v2.xml -api sync --progress true -b 1 -niter 1000 --nthreads 1
-
 ./benchmark_app -m ~/openvino/converted/fp32/resnet-50.xml -api sync --progress true -b 1 -niter 1000 --nthreads 1
 
 echo "#########################################################################################################"
