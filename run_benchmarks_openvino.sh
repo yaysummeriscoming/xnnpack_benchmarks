@@ -22,29 +22,29 @@ python3 downloader.py --name resnet-50 -o ~/openvino/
 cd /opt/intel/openvino/deployment_tools/model_optimizer/install_prerequisites
 ./install_prerequisites_caffe.sh
 cd /opt/intel/openvino/deployment_tools/model_optimizer
-python3 mo.py --input_model /home/pieterluitjens/openvino/public/mobilenet-v2/mobilenet-v2.caffemodel --data_type FP16 --output_dir /home/pieterluitjens/openvino/converted/fp16
-python3 mo.py --input_model /home/pieterluitjens/openvino/public/mobilenet-v2/mobilenet-v2.caffemodel --data_type FP32 --output_dir /home/pieterluitjens/openvino/converted/fp32
-python3 mo.py --input_model /home/pieterluitjens/openvino/public/resnet-50/resnet-50.caffemodel --data_type FP32 --output_dir /home/pieterluitjens/openvino/converted/fp32
+python3 mo.py --input_model ~/openvino/public/mobilenet-v2/mobilenet-v2.caffemodel --data_type FP16 --output_dir ~/openvino/converted/fp16
+python3 mo.py --input_model ~/openvino/public/mobilenet-v2/mobilenet-v2.caffemodel --data_type FP32 --output_dir ~/openvino/converted/fp32
+python3 mo.py --input_model ~/openvino/public/resnet-50/resnet-50.caffemodel --data_type FP32 --output_dir ~/openvino/converted/fp32
 
 # Build the C++ benchmark tool
 cd /opt/intel/openvino/deployment_tools/inference_engine/samples/cpp
 ./build_samples.sh
-cd /home/pieterluitjens/inference_engine_cpp_samples_build/intel64/Release
+cd ~/inference_engine_cpp_samples_build/intel64/Release
 
 # Benchmark
 # See https://docs.openvinotoolkit.org/latest/_inference_engine_samples_benchmark_app_README.html
 echo "#########################################################################################################"
 echo "Benchmarking 1 thread"
 
-./benchmark_app -m /home/pieterluitjens/openvino/converted/fp32/mobilenet-v2.xml -api sync --progress true -b 1 -niter 1000 --nthreads 1
+./benchmark_app -m ~/openvino/converted/fp32/mobilenet-v2.xml -api sync --progress true -b 1 -niter 1000 --nthreads 1
 
-./benchmark_app -m /home/pieterluitjens/openvino/converted/fp32/resnet-50.xml -api sync --progress true -b 1 -niter 1000 --nthreads 1
+./benchmark_app -m ~/openvino/converted/fp32/resnet-50.xml -api sync --progress true -b 1 -niter 1000 --nthreads 1
 
 echo "#########################################################################################################"
 echo "Benchmarking max threads"
 
-./benchmark_app -m /home/pieterluitjens/openvino/converted/fp32/mobilenet-v2.xml -api sync --progress true -b 1 -niter 1000
-./benchmark_app -m /home/pieterluitjens/openvino/converted/fp32/mobilenet-v2.xml -api async --progress true -b 1 -niter 1000
+./benchmark_app -m ~/openvino/converted/fp32/mobilenet-v2.xml -api sync --progress true -b 1 -niter 1000
+./benchmark_app -m ~/openvino/converted/fp32/mobilenet-v2.xml -api async --progress true -b 1 -niter 1000
 
-./benchmark_app -m /home/pieterluitjens/openvino/converted/fp32/resnet-50.xml -api sync --progress true -b 1 -niter 1000
-./benchmark_app -m /home/pieterluitjens/openvino/converted/fp32/resnet-50.xml -api async --progress true -b 1 -niter 1000
+./benchmark_app -m ~/openvino/converted/fp32/resnet-50.xml -api sync --progress true -b 1 -niter 1000
+./benchmark_app -m ~/openvino/converted/fp32/resnet-50.xml -api async --progress true -b 1 -niter 1000
